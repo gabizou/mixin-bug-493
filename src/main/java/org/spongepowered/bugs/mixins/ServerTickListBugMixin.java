@@ -16,6 +16,19 @@ import java.util.Queue;
 @Mixin(ServerTickList.class)
 public abstract class ServerTickListBugMixin<T> {
 
+    @Inject(
+        method = "tick",
+        at = @At(
+            value = "INVOKE",
+            target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V",
+            remap = false,
+            shift = At.Shift.AFTER
+        ),
+        locals = LocalCapture.PRINT
+    )
+    private void impl$markDataAsCompleted(CallbackInfo ci) {
+    }
+
     @Redirect(
         method = "tick",
         at = @At(
@@ -26,18 +39,5 @@ public abstract class ServerTickListBugMixin<T> {
     )
     private boolean impl$validateHasNextUncancelled(Queue<TickNextTickData<T>> queue, Object data) {
         return queue.add((TickNextTickData<T>) data);
-    }
-
-    @Inject(
-        method = "tick",
-        at = @At(
-            value = "INVOKE",
-            target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V",
-            remap = false,
-            shift = At.Shift.AFTER
-        ),
-        locals = LocalCapture.CAPTURE_FAILHARD
-    )
-    private void impl$markDataAsCompleted(CallbackInfo ci, int var0, ServerChunkCache var1, Iterator var2, TickNextTickData var4, Queue var8, TickNextTickData var9) {
     }
 }
