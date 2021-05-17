@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Iterator;
 import java.util.Queue;
 
 @Mixin(ServerTickList.class)
@@ -35,8 +36,8 @@ public abstract class ServerTickListBugMixin<T> {
             remap = false,
             shift = At.Shift.AFTER
         ),
-        locals = LocalCapture.PRINT
+        locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void impl$markDataAsCompleted(CallbackInfo ci) {
+    private void impl$markDataAsCompleted(CallbackInfo ci, int var0, ServerChunkCache var1, Iterator var2, TickNextTickData var4, Queue var8, TickNextTickData var9) {
     }
 }
