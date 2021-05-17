@@ -24,9 +24,9 @@ public abstract class ServerTickListBugMixin<T> {
             remap = false,
             shift = At.Shift.AFTER
         ),
-        locals = LocalCapture.PRINT
+        locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void impl$markDataAsCompleted(CallbackInfo ci) {
+    private void impl$markDataAsCompleted(CallbackInfo ci, int var0, ServerChunkCache var1, Iterator var2, TickNextTickData var4) {
     }
 
     @Redirect(
